@@ -1,0 +1,9 @@
+jobs_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../jobs.duckdb
+      schema: main
+      threads: 4
+      

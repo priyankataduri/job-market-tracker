@@ -1,0 +1,19 @@
+version: 2
+models:
+  - name: stg_job_postings
+    columns:
+      - name: job_id
+        tests: [unique, not_null]
+  - name: int_jobs_deduped
+    columns:
+      - name: job_id
+        tests: [unique, not_null]
+      - name: role_family
+        tests:
+          - accepted_values:
+              values: ['Data Engineer', 'Data Analyst', 'Analytics Engineer', 'Other']
+  - name: skill_demand_weekly
+    columns:
+      - name: pct_of_postings
+        tests: [not_null]
+        

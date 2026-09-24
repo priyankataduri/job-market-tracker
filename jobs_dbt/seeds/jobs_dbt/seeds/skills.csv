@@ -1,0 +1,24 @@
+skill,pattern,category
+Python,\bpython\b|pyspark,Language
+SQL,\bsql\b,Language
+Scala,\bscala\b,Language
+Java,\bjava\b,Language
+Spark,\bspark\b|pyspark,Processing
+Kafka,\bkafka\b,Streaming
+Airflow,\bairflow\b,Orchestration
+dbt,\bdbt\b,Transformation
+Snowflake,\bsnowflake\b,Warehouse
+BigQuery,\bbigquery\b,Warehouse
+Redshift,\bredshift\b,Warehouse
+Databricks,\bdatabricks\b,Platform
+AWS,\baws\b|amazon web services,Cloud
+Azure,\bazure\b,Cloud
+GCP,\bgcp\b|google cloud,Cloud
+Docker,\bdocker\b,DevOps
+Kubernetes,\bkubernetes\b|\bk8s\b,DevOps
+Terraform,\bterraform\b,DevOps
+Tableau,\btableau\b,BI
+Power BI,power bi|powerbi,BI
+Excel,\bexcel\b,BI
+ETL,\betl\b|\belt\b,Concept
+Data Modeling,data model,Concept
