@@ -27,7 +27,7 @@ Python, REST API (Adzuna), DuckDB, dbt, SQL, Streamlit, launchd scheduling, Git
 - The Adzuna API returns a shortened job description, so skill counts reflect the title and summary rather than the full posting.
 
 ## Key findings
-[Add 2–3 findings after a few weeks, e.g. "SQL appeared in X% of data engineer postings, while Spark appeared in Y%."]
+Findings will be added as data accumulates (pipeline running daily since September 2026).
 
 ## How to run
 1. Get free API keys from developer.adzuna.com and add them to a `.env` file (`ADZUNA_APP_ID`, `ADZUNA_APP_KEY`).
