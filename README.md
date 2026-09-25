@@ -22,6 +22,7 @@ Python, REST API (Adzuna), DuckDB, dbt, SQL, Streamlit, launchd scheduling, Git
 - **Two-level deduplication:** by job ID at ingestion, and by title, company, and location in dbt to catch reposted jobs.
 - **Skill extraction:** word-boundary regex patterns avoid false matches (e.g. "Java" vs "JavaScript", "SQL" vs "NoSQL"). Ambiguous skills like "R" and "Go" were excluded.
 - **Normalized metrics:** skills are measured as a percentage of postings so weeks with different posting volumes can be compared fairly.
+- **Retry logic:** API requests retry with increasing wait times on timeouts and temporary server errors, and the pipeline waits for network connectivity before running.
 
 ## Limitations
 - The Adzuna API returns a shortened job description, so skill counts reflect the title and summary rather than the full posting.

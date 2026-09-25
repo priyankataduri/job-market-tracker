@@ -14,12 +14,14 @@ APP_KEY = os.getenv("ADZUNA_APP_KEY")
 
 COUNTRY = "us"
 SEARCH_TERMS = ["data engineer", "data analyst", "analytics engineer"]
-PAGES_PER_TERM = 10        # 50 results per page
-MAX_DAYS_OLD = 30          # only recent postings
+PAGES_PER_TERM = 3        # 50 results per page
+MAX_DAYS_OLD = 3          # only recent postings
 DB_PATH = "jobs.duckdb"
 
+RETRYABLE_STATUS = {429, 500, 502, 503, 504}
 
-def fetch_page(term, page):
+
+def fetch_page(term, page, retries=4):
     url = f"https://api.adzuna.com/v1/api/jobs/{COUNTRY}/search/{page}"
     params = {
         "app_id": APP_ID,
@@ -30,9 +32,22 @@ def fetch_page(term, page):
         "sort_by": "date",
         "content-type": "application/json",
     }
-    r = requests.get(url, params=params, timeout=30)
-    r.raise_for_status()
-    return r.json().get("results", [])
+    for attempt in range(1, retries + 1):
+        try:
+            r = requests.get(url, params=params, timeout=60)
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
+            error = type(e).__name__
+        else:
+            if r.status_code not in RETRYABLE_STATUS:
+                r.raise_for_status()  # errors like 401 (bad keys) stop immediately
+                return r.json().get("results", [])
+            error = f"HTTP {r.status_code}"
+
+        if attempt == retries:
+            raise RuntimeError(f"Adzuna request failed after {retries} attempts: {error}")
+        wait = 30 * attempt
+        print(f"Attempt {attempt} failed ({error}); retrying in {wait}s...", flush=True)
+        time.sleep(wait)
 
 
 def to_row(job, term, ingested_at):
